@@ -1,0 +1,25 @@
+name: Electricity Notification
+
+on:
+  schedule:
+    - cron: '0 14 * * *' #每天22:00触发
+  workflow_dispatch:
+
+jobs:
+  get_electricity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install requests module
+        run: pip install requests
+      - name: Run script
+        env:
+          BARK_URL: ${{ secrets.BARK_URL }}
+          DYID: ${{ secrets.DYID }}
+          PID: ${{ secrets.PID }}
+        run: python Electricity_Checker.py
