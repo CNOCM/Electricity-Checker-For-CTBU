@@ -25,6 +25,8 @@ def get_electricity(bark_url, dyid, pid):
 
     # 调用Bark_notification函数推送电费信息到手机
     Bark_notification(bark_url, value, date, electricity)
+    # 调用Bark_notification函数推送电费信息到手机
+    Server_notification(sckey, value, date, electricity)
 
 
 # Bark推送电费信息到手机
@@ -40,11 +42,26 @@ def Bark_notification(bark_url, value, date, electricity):
     requests.get(bark_url, params=params)
 
 
+# Server酱推送
+def Server_notification(sckey, value, date, electricity):
+    url = 'https://sc.ftqq.com/{}.send'.format(sckey)
+    title = '电费查询结果'
+    message = f'当前余额：{value}\n扣费日期：{date}\n当月电费：{electricity}'
+    if float(value) < 10:
+        message += '\n余额不足10元，请及时充值！'
+    data = {
+        'text': title,
+        'desp': message
+    }
+    response = requests.post(url, data=data)
+
+
 # 从环境变量中获取参数
 bark_url = os.environ['BARK_URL']
+sckey = os.environ['SCKEY']
 dyid = os.environ['DYID']
 pid = os.environ['PID']
 
 
 # 运行脚本
-get_electricity(bark_url, dyid, pid)
+get_electricity(bark_url, sckey, dyid, pid)
