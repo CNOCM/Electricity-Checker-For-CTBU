@@ -25,7 +25,7 @@ def get_electricity(bark_url, dyid, pid):
 
     # 调用Bark_notification函数推送电费信息到手机
     Bark_notification(bark_url, value, date, electricity)
-    # 调用Bark_notification函数推送电费信息到手机
+    # 调用Server_notification函数推送电费信息到手机
     Server_notification(sckey, value, date, electricity)
 
 
