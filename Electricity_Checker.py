@@ -3,7 +3,7 @@ import requests
 
 
 # 获取电费
-def get_electricity(bark_url, dyid, pid):
+def get_electricity(bark_url, sckey, dyid, pid):
     url = 'https://hqpay.ctbu.edu.cn/weixin/ashx/frmuser.ashx'
     # 设置自定义的User-Agent头
     headers = {
